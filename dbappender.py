@@ -1,12 +1,10 @@
 import os
 import sys
-import MySQLdb
 import librosa
 import redis
 import signal
 import time
 import numpy as np
-import os
 r_server=redis.Redis('localhost')
 
 class timeout(Exception):
@@ -48,7 +46,6 @@ def main():
 				continue
 			if file_name in error:
 				continue
-			signal.alarm(60*2)
 			try:
 				print(file_name+" computation begins")
 				y,sr= librosa.load(add_path[foo]+'/'+file_name)
@@ -64,7 +61,6 @@ def main():
 				print("error")
 				r_server.lpush("problem_"+add_emotion[foo],file_name)
 			else:
-				signal.alarm(0)
 				print("added")
 
 
